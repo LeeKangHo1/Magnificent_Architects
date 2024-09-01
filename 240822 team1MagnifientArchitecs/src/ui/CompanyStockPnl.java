@@ -59,8 +59,6 @@ public class CompanyStockPnl extends JPanel {
 		List<AllCompany> allCompanyList = allCompanyDAO.findAllByID(userInfoStockFrame.getUser_ID(),
 				userInfoStockFrame.getUser_SaveData());
 
-		List<AllCompanyBackdata> findACompanyBackdata = new ArrayList<>();
-		List<AllCompanyBackdata> findBCompanyBackdata = new ArrayList<>();
 
 		// 참고
 //		showCompanyData(userInfo, allCompanyList, findACompanyBackdata, 0);
@@ -106,8 +104,6 @@ public class CompanyStockPnl extends JPanel {
 		List<AllCompany> allCompanyList = allCompanyDAO.findAllByID(userInfoStockFrame.getUser_ID(),
 				userInfoStockFrame.getUser_SaveData());
 
-		List<AllCompanyBackdata> findACompanyBackdata = new ArrayList<>();
-		List<AllCompanyBackdata> findBCompanyBackdata = new ArrayList<>();
 		String companyName = allCompanyList.get(companyIndex).getCompanyName();
 		AllCompany allCompany = allCompanyDAO.findCompByID(companyName, userInfo.getUser_ID(),
 				userInfo.getUser_SaveData());
