@@ -64,6 +64,7 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 
 		// 가장 큰 패널(contentPane) 설정
 		setSize(500, 673);
+//		setSize(500, 690);
 		add(contentPane);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
