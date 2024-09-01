@@ -42,7 +42,6 @@ public class SellPriceGUI extends JPanel {
 	public SellPriceGUI(UserInfo parentUserInfo, String companyName, int companyIndex) {
 		this.companyName = companyName;
 		this.companyIndex = companyIndex;
-		System.out.println(companyName);
 
 		UserInfo userInfo = userInfoDAO.findByIDAndData(parentUserInfo.getUser_ID(), parentUserInfo.getUser_SaveData());
 		List<AllCompany> allCompanyList = allCompanyDAO.findAllByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
@@ -91,6 +90,7 @@ public class SellPriceGUI extends JPanel {
 		tfSellPrice.setBounds(130, 134, 116, 21);
 		pnlInformation.add(tfSellPrice);
 		tfSellPrice.setColumns(10);
+		
 
 		// 매도 가격: 사용자 선택 수량 * 회사 주식 금액
 		String sellStockString = tfSellPrice.getText();
@@ -160,6 +160,8 @@ public class SellPriceGUI extends JPanel {
 		pnlNumber.setBackground(SystemColor.window);
 		pnlBtn.add(pnlNumber, BorderLayout.CENTER);
 		pnlNumber.setLayout(new GridLayout(0, 4, 5, 5));
+		
+
 
 		int[] firstNumber = { 0 };
 		String[] operator = { null };
@@ -234,7 +236,9 @@ public class SellPriceGUI extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				String companyName = lblCompanyName.getText();
-				companyName = companyName.substring(0, 4);
+//				System.out.println(companyName);
+//				companyName = companyName.substring(0, 10);
+			
 
 				String sellStockString = tfSellPrice.getText();
 				int sellStock = 0;

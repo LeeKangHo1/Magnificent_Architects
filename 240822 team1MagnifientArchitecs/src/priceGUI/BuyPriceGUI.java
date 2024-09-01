@@ -42,6 +42,7 @@ public class BuyPriceGUI extends JPanel {
 	public BuyPriceGUI(UserInfo parentUserInfo, String companyName, int companyIndex) {
 		this.companyName = companyName;
 		this.companyIndex = companyIndex;
+		
 		UserInfo userInfo = userInfoDAO.findByIDAndData(parentUserInfo.getUser_ID(), parentUserInfo.getUser_SaveData());
 		List<AllCompany> allCompanyList = allCompanyDAO.findAllByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
 		int today = 0;
@@ -232,6 +233,7 @@ public class BuyPriceGUI extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				String companyName = lblCompanyName.getText();
+				System.out.println(companyName);
 				companyName = companyName.substring(0, 4);
 
 				String buyStockString = tfBuyPrice.getText();
