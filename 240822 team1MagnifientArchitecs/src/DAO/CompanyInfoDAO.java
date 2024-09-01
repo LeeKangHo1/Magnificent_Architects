@@ -39,4 +39,28 @@ public class CompanyInfoDAO {
 		}
 		return null;
 	}
+	
+	public CompanyInfo findCompanyCategoryByComName(String companyName) {
+		String sql = "SELECT CompanyCategory FROM companyInfo WHERE companyName = ?";
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = DBUtil.getConnection("go_db");
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, companyName);
+			rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				CompanyInfo companyInfo = companyInfoMapper.resultMapping(rs);
+				return companyInfo;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeAll(rs, stmt, conn);
+		}
+		return null;
+	}
 }

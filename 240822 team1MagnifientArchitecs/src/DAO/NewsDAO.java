@@ -14,9 +14,9 @@ import tables.News;
 public class NewsDAO {
 	public static final IResultMapper<News>  newsMapper = new NewsMapper();
 	
-	public News findCompByID(int info_Num, String userId, int saveData) {
+	public News findCompByID(int info_Num) {
 		String sql = "SELECT * FROM News WHERE "
-				+ "info_Num = ? and simulation_ID = ? and simulation_ID_SaveData = ?";
+				+ "info_Num = ?";
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -24,8 +24,6 @@ public class NewsDAO {
 			conn = DBUtil.getConnection("go_db");
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, info_Num);
-			stmt.setString(2, userId);
-			stmt.setInt(3, saveData);
 			rs = stmt.executeQuery();
 
 			if (rs.next()) {

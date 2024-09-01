@@ -8,7 +8,10 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -17,11 +20,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import DAO.CompanyInfoDAO;
 import DAO.UserInfoDAO;
 import priceGUI.BuyPriceGUI;
 import priceGUI.SellPriceGUI;
 import tables.AllCompany;
 import tables.AllCompanyBackdata;
+import tables.CompanyInfo;
+import tables.News;
 import tables.UserInfo;
 import tables.UserMoneyHistory;
 
@@ -32,7 +38,7 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 	private List<UserMoneyHistory> userMoneyHistoryList;
 	private AllCompany allCompany;
 	private AllCompanyBackdata allCompanyBackdata;
-
+	private Set<Integer> newsIndexSet = new HashSet<>();
 	private static ListAndDAO listAndDAO = new ListAndDAO();
 	private CompanyStockBoardPnl companyStockBoardPnl;
 	private ClickMyInfoBtnPnl clickMyInfoBtnPnl;
@@ -43,7 +49,8 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 	private GraphAndCompanyInfoPnl graphAndCompanyInfoPnl;
 	private BuyPriceGUI buyPriceGUI;
 	private SellPriceGUI sellPriceGUI;
-
+	private NewsPnl newsPnl = new NewsPnl();
+	private int newsInfoNum = 0;
 	public BaseMainFrame(UserInfo userInfo) {
 		this.userInfo = userInfo;
 
@@ -149,15 +156,53 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 
 					listAndDAO.userInfoDAO.updateDate(userInfo.getUser_ID(), userInfo.getUser_SaveData());
 
+					newsInfoNum = -1;
+					int setSize = newsIndexSet.size();
+
+					while (true) {
+						newsInfoNum = (int) (Math.random() * 30);
+						newsIndexSet.add(newsInfoNum);
+
+						if (newsIndexSet.size() > setSize)
+							break;
+					}
+
+					News news = listAndDAO.newsDAO.findCompByID(newsInfoNum);
+					System.out.println(newsInfoNum);
+					String newsData = news.getInfo_News();
+					String newsCategory = news.getCompanyCategory();
+					boolean upAndDown = true;
+					int changeComMoney = 0;
 					for (int i = 0; i < userMoneyHistoryList.size(); i++) {
-						int changeComMoney = (int) (Math.random() * 20) - 10;
+
+						UserMoneyHistory umhForNews = listAndDAO.usermoneyHistoryDAO.findByCompany(
+								userMoneyHistoryList.get(i).getUser_Stock(), userInfo.getUser_ID(),
+								userInfo.getUser_SaveData());
+						String companyName = umhForNews.getUser_Stock();
+
+						// 뉴스의 회사 이름과 입력받은 부분 비교 필요
+						CompanyInfo companyInfo = listAndDAO.companyDAO.findByCompanyName(companyName);
+						String companyCategory = companyInfo.getCompanyCategory();
+						Random r = new Random();
+						changeComMoney = r.nextInt(20) - 10;
+						
+						if (newsCategory.equals(companyCategory)) {
+							if (Math.random() * 100 > 40) {
+								changeComMoney = news.getStockPlus();
+								upAndDown =true;
+							} else {
+								changeComMoney = news.getStockMinus();
+								upAndDown = false;
+							}
+						}
 						
 						listAndDAO.usermoneyHistoryDAO.updatePriceAndDate(changeComMoney, userInfo.getUser_ID(),
 								userInfo.getUser_SaveData(), userMoneyHistoryList.get(i).getUser_Stock(),
 								userMoneyHistoryList.get(i).getStock_Price_now());
-						
+
 						listAndDAO.allCompanyDAO.updatePriceAndDate(userMoneyHistoryList.get(i).getUser_Stock(),
 								changeComMoney, userInfo.getUser_ID(), userInfo.getUser_SaveData());
+
 						listAndDAO.allCompanyBackdataDAO.insert(userMoneyHistoryList.get(i).getUser_Stock(),
 								listAndDAO.allCompanyDAO
 										.findCompByID(userMoneyHistoryList.get(i).getUser_Stock(),
@@ -171,6 +216,10 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 					}
 
 					JOptionPane.showMessageDialog(BaseMainFrame.this, "오늘 장이 마감되었습니다.");
+					if(upAndDown)
+						JOptionPane.showMessageDialog(BaseMainFrame.this, news.getInfo_NewsUp());
+					else
+						JOptionPane.showMessageDialog(BaseMainFrame.this, news.getInfo_NewsDown());
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -185,6 +234,7 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 
 	private void updateMainPnl() {
 		// 제일 처음 화면 업데이트
+		System.out.println("함수:" + newsInfoNum);
 		companyStockBoardPnl.updatebaseMainPnl();
 		companyStockBoardPnl.updateAllComapanyInfoPnl();
 		clickMyInfoBtnPnl.updateAll(userInfo);
@@ -195,6 +245,7 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		graphAndCompanyInfoPnl.updateAll("D 회사", userInfo);
 		graphAndCompanyInfoPnl.updateAll("E 회사", userInfo);
 		graphAndCompanyInfoPnl.updateAll("F 회사", userInfo);
+		newsPnl.updateNews(newsInfoNum);
 		updateDay();
 	}
 
@@ -217,7 +268,8 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		sellPriceGUI = new SellPriceGUI(userInfo, "A 회사", 0);
 
 		// 총 매수, 평가손익, 총 평가, 수익률, 회사들 주식 상황 보여주는 패널
-		companyStockBoardPnl = new CompanyStockBoardPnl(userInfo, cardLayout, pnlCenter, graphAndCompanyInfoPnl, buyPriceGUI, sellPriceGUI);
+		companyStockBoardPnl = new CompanyStockBoardPnl(userInfo, cardLayout, pnlCenter, graphAndCompanyInfoPnl,
+				buyPriceGUI, sellPriceGUI);
 
 		// 하단의 내 정보를 누르면 나오는 패널
 		clickMyInfoBtnPnl = new ClickMyInfoBtnPnl(userInfo, cardLayout, pnlCenter);
@@ -226,7 +278,6 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		seeMyTradingHistoryPnl = new SeeMyTradingHistoryPnl(userInfo, cardLayout, pnlCenter);
 
 		// 이번 날짜 뉴스 패널
-		NewsPnl newsPnl = new NewsPnl();
 
 		pnlCenter.add(companyStockBoardPnl, "companyStockBoardPnl");
 		pnlCenter.add(clickMyInfoBtnPnl, "clickMyInfoBtnPnl");
