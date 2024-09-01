@@ -36,6 +36,7 @@ public class BuyPriceGUI extends JPanel {
 	private JLabel lblPrice;
 	private JLabel lblBuyData;
 	private String companyName;
+	
 	private int companyIndex;
 
 	public BuyPriceGUI(UserInfo parentUserInfo, String companyName, int companyIndex) {
@@ -232,18 +233,6 @@ public class BuyPriceGUI extends JPanel {
 				// TODO Auto-generated method stub
 				String companyName = lblCompanyName.getText();
 				companyName = companyName.substring(0, 4);
-				System.out.println(companyName);
-//				int companyIndex = 0;
-//				if(companyName.equals("B 회사"))
-//					companyIndex = 1;
-//				else if(companyName.equals("C 회사"))
-//					companyIndex = 2;
-//				else if(companyName.equals("D 회사"))
-//					companyIndex = 3;
-//				else if(companyName.equals("E 회사"))
-//					companyIndex = 4;
-//				else if(companyName.equals("F 회사"))
-//					companyIndex = 5;
 
 				String buyStockString = tfBuyPrice.getText();
 				int buyStock = 0;
@@ -258,8 +247,6 @@ public class BuyPriceGUI extends JPanel {
 					AllCompany allCompany = allCompanyDAO.findCompByID(companyName, userInfo.getUser_ID(), userInfo.getUser_SaveData());
 					buyStockCount = allCompany.getCompanyStockCount() - buyStock;
 					buyStockPrice = allCompany.getCompanyStockPrice();
-					System.out.println(buyStockPrice);
-					System.out.println(buyStockCount);
 					int buyPrice = 0;
 
 					// 평가금액
