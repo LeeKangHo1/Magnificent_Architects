@@ -20,13 +20,15 @@ public class NewsMapper implements IResultMapper<News>{
 	@Override
 	public News resultMapping(ResultSet rs) {
 		try {
-			int info_num = rs.getInt("info_num");
+			int info_Num = rs.getInt("info_num");
 			String info_News = rs.getString("info_News");
 			String info_NewsUp = rs.getString("info_NewsUp");
 			String info_NewsDown = rs.getString("info_NewsDown");
-			String info_Expect = rs.getString("info_Expect");
+			int stockPlus = rs.getInt("stockPlus");
+			int stockMinus = rs.getInt("stockMinus");
+			String companyCategory =  rs.getString("companyCategory");
 			
-			return new News(info_num, info_News, info_NewsUp, info_NewsDown, info_Expect);
+			return new News(info_Num, info_News, info_NewsUp, info_NewsDown, stockPlus, stockMinus, companyCategory);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException("News 매핑 중 예외 발생", e);
