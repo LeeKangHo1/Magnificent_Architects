@@ -311,7 +311,7 @@ public class SellPriceGUI extends JPanel {
 		JButton btnBack = new JButton("뒤로가기");
 		btnBack.setBackground(SystemColor.activeCaption);
 		pnlBtnSet.add(btnBack);
-
+		System.out.println(companyName);
 	    updateComInfo(parentUserInfo, companyName);
 
 	}
