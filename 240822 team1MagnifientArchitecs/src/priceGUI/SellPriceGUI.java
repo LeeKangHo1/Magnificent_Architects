@@ -42,6 +42,8 @@ public class SellPriceGUI extends JPanel {
 	public SellPriceGUI(UserInfo parentUserInfo, String companyName, int companyIndex) {
 		this.companyName = companyName;
 		this.companyIndex = companyIndex;
+		System.out.println(companyName);
+
 		UserInfo userInfo = userInfoDAO.findByIDAndData(parentUserInfo.getUser_ID(), parentUserInfo.getUser_SaveData());
 		List<AllCompany> allCompanyList = allCompanyDAO.findAllByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
 		int today = 0;
@@ -84,13 +86,13 @@ public class SellPriceGUI extends JPanel {
 		lblSellCount.setBounds(46, 135, 72, 15);
 		pnlInformation.add(lblSellCount);
 
-		// 사용자 매수 수량 입력
+		// 사용자 매도 수량 입력
 		JTextField tfSellPrice = new JTextField();
 		tfSellPrice.setBounds(130, 134, 116, 21);
 		pnlInformation.add(tfSellPrice);
 		tfSellPrice.setColumns(10);
 
-		// 매수 가격: 사용자 선택 수량 * 회사 주식 금액
+		// 매도 가격: 사용자 선택 수량 * 회사 주식 금액
 		String sellStockString = tfSellPrice.getText();
 		int sellStock = 0;
 		if (!sellStockString.isEmpty()) {
@@ -105,7 +107,7 @@ public class SellPriceGUI extends JPanel {
 		lblSellMax = new JLabel();
 
 		// TODO
-//		lblSellMax.setText("최대 매수 가능 수량: " + allCompanyList.get(companyIndex).getCompanyStockCount() + "주");
+//		lblSellMax.setText("최대 매도 가능 수량: " + allCompanyList.get(companyIndex).getCompanyStockCount() + "주");
 
 		lblSellMax.setFont(new Font("굴림", Font.PLAIN, 11));
 		lblSellMax.setBounds(130, 162, 155, 15);
@@ -311,39 +313,37 @@ public class SellPriceGUI extends JPanel {
 		JButton btnBack = new JButton("뒤로가기");
 		btnBack.setBackground(SystemColor.activeCaption);
 		pnlBtnSet.add(btnBack);
-	    updateComInfo(parentUserInfo, companyName);
 
 	}
 
-	// 업데이트 메서드
 	public void updateComInfo(UserInfo parentUserInfo, String companyName) {
-	    int companyIndex = selectCompanyIndex(companyName);
+		int companyIndex = selectCompanyIndex(companyName);
 
-	    UserInfo userInfo = userInfoDAO.findByIDAndData(parentUserInfo.getUser_ID(), parentUserInfo.getUser_SaveData());
-	    List<AllCompany> allCompanyList = allCompanyDAO.findAllByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
-	    
-	    if (allCompanyList != null && !allCompanyList.isEmpty()) {
-	        AllCompany allCompany = allCompanyDAO.findCompByID(companyName, userInfo.getUser_ID(),
-	                userInfo.getUser_SaveData());
+		UserInfo userInfo = userInfoDAO.findByIDAndData(parentUserInfo.getUser_ID(), parentUserInfo.getUser_SaveData());
+		List<AllCompany> allCompanyList = allCompanyDAO.findAllByID(userInfo.getUser_ID(), userInfo.getUser_SaveData());
+		int today = 0;
+		AllCompany allCompany = allCompanyDAO.findCompByID(companyName, userInfo.getUser_ID(),
+				userInfo.getUser_SaveData());
+		int changeStockPrice = 0;
+		if (userInfo.getUser_Date() == 1) {
+			System.out.printf("전일 대비  0원  \n");
+		} else {
+			today = userInfo.getUser_Date();
+			int yesterday = today - 1;
 
-	        int today = userInfo.getUser_Date();
-	        int changeStockPrice = 0;
-	        if (today > 1) {
-	            int yesterday = today - 1;
-	            AllCompanyBackdata acbdYesterday = allCompanyBackdataDAO.findCompanyByDate(companyName, yesterday,
-	                    userInfo.getUser_ID(), userInfo.getUser_SaveData());
-	            int todaysStockPrice = allCompany.getCompanyStockPrice();
-	            int yesterdayStockPrice = acbdYesterday.getCompanyStockPrice();
-	            changeStockPrice = todaysStockPrice - yesterdayStockPrice;
-	        }
+			AllCompanyBackdata acbdYesterday = allCompanyBackdataDAO.findCompanyByDate(companyName, yesterday,
+					userInfo.getUser_ID(), userInfo.getUser_SaveData());
 
-	        lblSellMax.setText("최대 매도 가능 수량: " + allCompany.getCompanyStockCount() + "주");
-	        lblCompanyName.setText(allCompany.getCompanyName() + " 회사");
-	        lblPrice.setText(allCompany.getCompanyStockPrice() + "원");
-	        lblSellData.setText(changeStockPrice + "원");
-	    } else {
-	        System.out.println("Company list is empty or null");
-	    }
+			int todaysStockPrice = allCompany.getCompanyStockPrice();
+			int yesterdayStockPrice = acbdYesterday.getCompanyStockPrice();
+			changeStockPrice = todaysStockPrice - yesterdayStockPrice;
+
+		}
+
+		lblSellMax.setText("최대 매도 가능 수량: " + allCompanyList.get(companyIndex).getCompanyStockCount() + "주");
+		lblCompanyName.setText(allCompanyList.get(companyIndex).getCompanyName() + " 회사");
+		lblPrice.setText(allCompanyList.get(companyIndex).getCompanyStockPrice() + "원");
+		lblSellData.setText(changeStockPrice + "원");
 	}
 
 	private int selectCompanyIndex(String companyName) {
