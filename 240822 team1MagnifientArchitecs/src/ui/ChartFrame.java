@@ -52,24 +52,64 @@ public class ChartFrame extends JFrame {
 			int stockPrice = chartMap.get(date);
 			series.add(date, stockPrice);
 		}
+		
+		if (companyName.equals("E 회사")) {
+			XYSeriesCollection dataset = new XYSeriesCollection(series);
+			// ChartFactory.createXYLineChart(차트제목, x축 이름, y축 이름, )
+			JFreeChart chart = ChartFactory.createXYLineChart("Stock", "Date", "StockPrice", dataset);
 
-		XYSeriesCollection dataset = new XYSeriesCollection(series);
-		// ChartFactory.createXYLineChart(차트제목, x축 이름, y축 이름, )
-		JFreeChart chart = ChartFactory.createXYLineChart("Stock", "Date", "StockPrice", dataset);
+			// X축 및 Y축 범위 설정
+			NumberAxis xAxis = (NumberAxis) chart.getXYPlot().getDomainAxis();
+			xAxis.setRange(0, 30); // X축 범위를 설정
+			xAxis.setTickUnit(new org.jfree.chart.axis.NumberTickUnit(5)); // X축 단위를 1로 설정
 
-		// X축 및 Y축 범위 설정
-		NumberAxis xAxis = (NumberAxis) chart.getXYPlot().getDomainAxis();
-		xAxis.setRange(0, 30); // X축 범위를 0에서 10으로 설정
-		xAxis.setTickUnit(new org.jfree.chart.axis.NumberTickUnit(5)); // X축 단위를 1로 설정
+			NumberAxis yAxis = (NumberAxis) chart.getXYPlot().getRangeAxis();
+			yAxis.setRange(0, 5000); // Y축 범위를  설정
+			
+			// 차트 패널 생성
+			ChartPanel chartPanel = new ChartPanel(chart);
+			chartPanel.setPreferredSize(new Dimension(500, 500));
+			setContentPane(chartPanel);
+			
+		} else if (companyName.equals("F 회사")) {
+			XYSeriesCollection dataset = new XYSeriesCollection(series);
+			// ChartFactory.createXYLineChart(차트제목, x축 이름, y축 이름, )
+			JFreeChart chart = ChartFactory.createXYLineChart("Stock", "Date", "StockPrice", dataset);
 
-		NumberAxis yAxis = (NumberAxis) chart.getXYPlot().getRangeAxis();
-		yAxis.setRange(0, 500); // Y축 범위를 0에서 250으로 설정
+			// X축 및 Y축 범위 설정
+			NumberAxis xAxis = (NumberAxis) chart.getXYPlot().getDomainAxis();
+			xAxis.setRange(0, 30); // X축 범위를 설정
+			xAxis.setTickUnit(new org.jfree.chart.axis.NumberTickUnit(5)); // X축 단위를 1로 설정
 
-		// 차트 패널 생성
-		ChartPanel chartPanel = new ChartPanel(chart);
-		chartPanel.setPreferredSize(new Dimension(500, 500));
-		setContentPane(chartPanel);
+			NumberAxis yAxis = (NumberAxis) chart.getXYPlot().getRangeAxis();
+			yAxis.setRange(0, 10000); // Y축 범위를  설정
+			
+			// 차트 패널 생성
+			ChartPanel chartPanel = new ChartPanel(chart);
+			chartPanel.setPreferredSize(new Dimension(500, 500));
+			setContentPane(chartPanel);
+			
+			
+		} else {
+			XYSeriesCollection dataset = new XYSeriesCollection(series);
+			// ChartFactory.createXYLineChart(차트제목, x축 이름, y축 이름, )
+			JFreeChart chart = ChartFactory.createXYLineChart("Stock", "Date", "StockPrice", dataset);
+
+			// X축 및 Y축 범위 설정
+			NumberAxis xAxis = (NumberAxis) chart.getXYPlot().getDomainAxis();
+			xAxis.setRange(0, 30); // X축 범위를 0에서 10으로 설정
+			xAxis.setTickUnit(new org.jfree.chart.axis.NumberTickUnit(5)); // X축 단위를 1로 설정
+
+			NumberAxis yAxis = (NumberAxis) chart.getXYPlot().getRangeAxis();
+			yAxis.setRange(0, 500); // Y축 범위를 0에서 250으로 설정
+			
+			// 차트 패널 생성
+			ChartPanel chartPanel = new ChartPanel(chart);
+			chartPanel.setPreferredSize(new Dimension(500, 500));
+			setContentPane(chartPanel);
+		}
 	}
+}
 
 //	public static void main(String[] args) {
 //		UserInfo userInfo = userInfoDAO.findByID("asd");
@@ -82,4 +122,3 @@ public class ChartFrame extends JFrame {
 //			example.setVisible(true);
 //		});
 //	}
-}
