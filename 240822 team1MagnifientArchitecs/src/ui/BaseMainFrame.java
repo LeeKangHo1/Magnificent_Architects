@@ -150,9 +150,11 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 
 					for (int i = 0; i < userMoneyHistoryList.size(); i++) {
 						int changeComMoney = (int) (Math.random() * 20) - 10;
+						
 						listAndDAO.usermoneyHistoryDAO.updatePriceAndDate(changeComMoney, userInfo.getUser_ID(),
 								userInfo.getUser_SaveData(), userMoneyHistoryList.get(i).getUser_Stock(),
 								userMoneyHistoryList.get(i).getStock_Price_now());
+						
 						listAndDAO.allCompanyDAO.updatePriceAndDate(userMoneyHistoryList.get(i).getUser_Stock(),
 								changeComMoney, userInfo.getUser_ID(), userInfo.getUser_SaveData());
 						listAndDAO.allCompanyBackdataDAO.insert(userMoneyHistoryList.get(i).getUser_Stock(),
@@ -211,7 +213,7 @@ public class BaseMainFrame extends JFrame implements ActionListener {
 		buyPriceGUI = new BuyPriceGUI(userInfo, "A 회사", 0);
 
 		// 매도 패널
-		sellPriceGUI = new SellPriceGUI();
+		sellPriceGUI = new SellPriceGUI(userInfo, "A 회사", 0);
 
 		// 총 매수, 평가손익, 총 평가, 수익률, 회사들 주식 상황 보여주는 패널
 		companyStockBoardPnl = new CompanyStockBoardPnl(userInfo, cardLayout, pnlCenter, graphAndCompanyInfoPnl, buyPriceGUI, sellPriceGUI);
