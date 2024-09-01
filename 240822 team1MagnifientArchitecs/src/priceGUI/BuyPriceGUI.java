@@ -341,7 +341,7 @@ public class BuyPriceGUI extends JPanel {
 		}
 
 		lblBuyMax.setText("최대 매수 가능 수량: " + allCompanyList.get(companyIndex).getCompanyStockCount() + "주");
-		lblCompanyName.setText(allCompanyList.get(companyIndex).getCompanyName() + " 회사");
+		lblCompanyName.setText(allCompanyList.get(companyIndex).getCompanyName());
 		lblPrice.setText(allCompanyList.get(companyIndex).getCompanyStockPrice() + "원");
 		lblBuyData.setText(changeStockPrice + "원");
 	}
