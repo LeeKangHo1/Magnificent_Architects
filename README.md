@@ -4,9 +4,9 @@
  <h1 align="center">
 	 Stock Simulation Project
  </h1>
-<div align="center">
+<h6 align="center">
     모의 주식 투자 프로그램
-</div>
+</h6>
 
 ## <프로젝트 개요>
 - 주식 시장의 기본적인 이해를 돕기 위한 학습 프로그램
@@ -46,11 +46,13 @@
 		![뉴스 화면](https://github.com/user-attachments/assets/6c435d4a-2693-47c4-b14f-20792738367f)
 		- 주가 변동에 대한 힌트를 제공
 
-	- ### 매수 화면
-		
-		![매수 화면](https://github.com/user-attachments/assets/36b2001f-dbd6-49d6-841f-a5391354b537)
-
 	- ### 그래프 차트
 		
 		![graph chart](https://github.com/user-attachments/assets/94d892f3-f79e-446a-b3b0-105c86ccf019)
 		- 날짜(X축)별 주식 가격(Y축) 변동을 확인 가능
+
+	- ### 매수 화면
+		
+		![매수 화면](https://github.com/user-attachments/assets/36b2001f-dbd6-49d6-841f-a5391354b537)
+
+
