@@ -1,3 +1,6 @@
+
+![java icon](https://github.com/user-attachments/assets/60194f53-cd2f-4631-9a5d-4897c07abe0b)
+
 <p align="center">
 	<img src="https://github.com/user-attachments/assets/7e845990-cdbe-4990-8c58-1474ebbcc998" alt="chart logo">
 </p>
