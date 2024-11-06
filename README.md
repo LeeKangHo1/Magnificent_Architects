@@ -4,7 +4,7 @@
  <h1 align="center">
 	 Stock Simulation Project
  </h1>
-<div align="center" style="font-size: 2em;">
+<div align="center">
     모의 주식 투자 프로그램
 </div>
 
