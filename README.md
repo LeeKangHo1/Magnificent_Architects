@@ -55,4 +55,8 @@
 		
 		![매수 화면](https://github.com/user-attachments/assets/36b2001f-dbd6-49d6-841f-a5391354b537)
 
-
+---
+## Authors
+- 이강호
+- 깃허브 닉네임: LeeKangHo1
+- [깃허브 프로필 링크](https://github.com/LeeKangHo1)
