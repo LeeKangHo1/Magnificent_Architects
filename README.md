@@ -26,7 +26,7 @@
 	![테이블 설정](https://github.com/user-attachments/assets/071fa13c-b50a-4bc9-b332-ceddd12239f9)
 
 - ## Program 주요 기능
-	- ### 로그인 후 메인화면
+	- ### 로그인 후 메인 화면
 		
 		![전체 회사 주식 정보 최초 화면](https://github.com/user-attachments/assets/895b484d-0024-4d7d-89af-895cdff356b5)
 		- 원금, 금액, 수익, 수익률, 회사별 주식 가격
