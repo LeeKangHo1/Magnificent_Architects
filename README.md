@@ -4,6 +4,9 @@
  <h1 align="center">
 	 Stock Simulation Project
  </h1>
+<div align="center" style="font-size: 2em;">
+    모의 주식 투자 프로그램
+</div>
 
 ## <프로젝트 개요>
 - 주식 시장의 기본적인 이해를 돕기 위한 학습 프로그램
